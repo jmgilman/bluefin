@@ -41,7 +41,7 @@
 				"wireguard-tools",
 				"xprop",
 				"yaru-theme",
-				"wl-clipboard", 
+				"wl-clipboard",
 				"zsh"
 			],
 			"bluefin-dx": [
@@ -58,7 +58,7 @@
 				"code",
 				"containerd.io",
 				"dbus-x11",
-                                "devpod",
+				"devpod",
 				"distrobuilder",
 				"docker-ce",
 				"docker-ce-cli",
@@ -68,6 +68,7 @@
 				"genisoimage",
 				"google-droid-sans-mono-fonts",
 				"google-go-mono-fonts",
+				"gopass",
 				"ibm-plex-mono-fonts",
 				"incus",
 				"incus-agent",
@@ -134,7 +135,7 @@
 			"bluefin": [
 				"gnome-shell-extension-tailscale-gnome-qs",
 				"input-leap",
-                                "nautilus-open-any-terminal"
+				"nautilus-open-any-terminal"
 			],
 			"bluefin-dx": [],
 			"bluefin-framework": []

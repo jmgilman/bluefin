@@ -19,18 +19,18 @@ ARG PACKAGE_LIST="bluefin"
 
 # GNOME VRR & Prompt
 RUN if [ ${FEDORA_MAJOR_VERSION} -ge "39" ]; then \
-        wget https://copr.fedorainfracloud.org/coprs/kylegospo/gnome-vrr/repo/fedora-"${FEDORA_MAJOR_VERSION}"/kylegospo-gnome-vrr-fedora-"${FEDORA_MAJOR_VERSION}".repo -O /etc/yum.repos.d/_copr_kylegospo-gnome-vrr.repo && \
-        rpm-ostree override replace --experimental --from repo=copr:copr.fedorainfracloud.org:kylegospo:gnome-vrr mutter mutter-common gnome-control-center gnome-control-center-filesystem && \
-        rm -f /etc/yum.repos.d/_copr_kylegospo-gnome-vrr.repo && \
-        wget https://copr.fedorainfracloud.org/coprs/kylegospo/prompt/repo/fedora-$(rpm -E %fedora)/kylegospo-prompt-fedora-$(rpm -E %fedora).repo?arch=x86_64 -O /etc/yum.repos.d/_copr_kylegospo-prompt.repo && \
-        rpm-ostree override replace \
-        --experimental \
-        --from repo=copr:copr.fedorainfracloud.org:kylegospo:prompt \
-            vte291 \
-            vte-profile && \
-        rpm-ostree install \
-            prompt && \
-        rm -f /etc/yum.repos.d/_copr_kylegospo-prompt.repo \
+    wget https://copr.fedorainfracloud.org/coprs/kylegospo/gnome-vrr/repo/fedora-"${FEDORA_MAJOR_VERSION}"/kylegospo-gnome-vrr-fedora-"${FEDORA_MAJOR_VERSION}".repo -O /etc/yum.repos.d/_copr_kylegospo-gnome-vrr.repo && \
+    rpm-ostree override replace --experimental --from repo=copr:copr.fedorainfracloud.org:kylegospo:gnome-vrr mutter mutter-common gnome-control-center gnome-control-center-filesystem && \
+    rm -f /etc/yum.repos.d/_copr_kylegospo-gnome-vrr.repo && \
+    wget https://copr.fedorainfracloud.org/coprs/kylegospo/prompt/repo/fedora-$(rpm -E %fedora)/kylegospo-prompt-fedora-$(rpm -E %fedora).repo?arch=x86_64 -O /etc/yum.repos.d/_copr_kylegospo-prompt.repo && \
+    rpm-ostree override replace \
+    --experimental \
+    --from repo=copr:copr.fedorainfracloud.org:kylegospo:prompt \
+    vte291 \
+    vte-profile && \
+    rpm-ostree install \
+    prompt && \
+    rm -f /etc/yum.repos.d/_copr_kylegospo-prompt.repo \
     ; fi
 
 COPY usr /usr
@@ -47,18 +47,18 @@ COPY --from=ghcr.io/ublue-os/akmods:${AKMODS_FLAVOR}-${FEDORA_MAJOR_VERSION} /rp
 RUN sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/_copr_ublue-os-akmods.repo && \
     wget https://negativo17.org/repos/fedora-multimedia.repo -O /etc/yum.repos.d/negativo17-fedora-multimedia.repo && \
     if [[ "${FEDORA_MAJOR_VERSION}" -ge "39" ]]; then \
-        rpm-ostree install \
-            /tmp/akmods-rpms/kmods/*xpadneo*.rpm \
-            /tmp/akmods-rpms/kmods/*xpad-noone*.rpm \
-            /tmp/akmods-rpms/kmods/*xone*.rpm \
-            /tmp/akmods-rpms/kmods/*openrazer*.rpm \
-            /tmp/akmods-rpms/kmods/*v4l2loopback*.rpm \
-            /tmp/akmods-rpms/kmods/*wl*.rpm \
+    rpm-ostree install \
+    /tmp/akmods-rpms/kmods/*xpadneo*.rpm \
+    /tmp/akmods-rpms/kmods/*xpad-noone*.rpm \
+    /tmp/akmods-rpms/kmods/*xone*.rpm \
+    /tmp/akmods-rpms/kmods/*openrazer*.rpm \
+    /tmp/akmods-rpms/kmods/*v4l2loopback*.rpm \
+    /tmp/akmods-rpms/kmods/*wl*.rpm \
     ; fi && \
     # Don't install evdi on asus because of conflicts
     if grep -qv "asus" <<< "${AKMODS_FLAVOR}"; then \
-        rpm-ostree install \
-            /tmp/akmods-rpms/kmods/*evdi*.rpm \
+    rpm-ostree install \
+    /tmp/akmods-rpms/kmods/*evdi*.rpm \
     ; fi && \
     sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/negativo17-fedora-multimedia.repo
 
@@ -102,6 +102,10 @@ RUN wget https://copr.fedorainfracloud.org/coprs/ublue-os/bling/repo/fedora-$(rp
     ostree container commit && \
     mkdir -p /var/tmp && \
     chmod -R 1777 /var/tmp
+
+# Custom image commands
+RUN systemctl enable sshd.service && \
+    systemctl enable bootstrap-system.service
 
 ## bluefin-dx developer edition image section
 FROM bluefin AS bluefin-dx

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+current_image=$(sudo rpm-ostree status --json | jq -r '.deployments[0]["container-image-reference"]')
+
+# Rebase to unsigned custom image if we're on a "fresh" install
+if [ "$current_image" = "ostree-unverified-registry:ghcr.io/jmgilman/bluefin-dx:latest" ]; then
+    rpm-ostree rebase ostree-image-signed:docker://ghcr.io/jmgilman/bluefin-dx:latest
+    reboot
+fi
