@@ -105,7 +105,8 @@ RUN wget https://copr.fedorainfracloud.org/coprs/ublue-os/bling/repo/fedora-$(rp
 
 # Custom image commands
 RUN systemctl enable sshd.service && \
-    systemctl enable bootstrap-system.service
+    systemctl enable bootstrap-system.service && \
+    just nix-install
 
 ## bluefin-dx developer edition image section
 FROM bluefin AS bluefin-dx
