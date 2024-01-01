@@ -109,13 +109,6 @@ RUN wget https://copr.fedorainfracloud.org/coprs/ublue-os/bling/repo/fedora-$(rp
 RUN systemctl enable sshd.service && \
     systemctl enable bootstrap-system.service
 
-# Install Nix
-RUN curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | bash -s -- install --no-confirm && \
-    rm -f /etc/systemd/system/nix-daemon.service && \
-    rm -f /etc/systemd/system/nix-daemon.socket && \
-    cp /nix/var/nix/profiles/default/lib/systemd/system/nix-daemon.service /etc/systemd/system/nix-daemon.service && \
-    cp /nix/var/nix/profiles/default/lib/systemd/system/nix-daemon.socket /etc/systemd/system/nix-daemon.socket
-
 ## bluefin-dx developer edition image section
 FROM bluefin AS bluefin-dx
 
