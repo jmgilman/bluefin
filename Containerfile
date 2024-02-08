@@ -63,8 +63,8 @@ RUN sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/_copr_ublue-os-akmods.repo
             /tmp/akmods-rpms/kmods/*wl*.rpm \
     ; fi && \
     if grep -qv "asus" <<< "${AKMODS_FLAVOR}"; then \
-        rpm-ostree install \
-            /tmp/akmods-rpms/kmods/*evdi*.rpm \
+    rpm-ostree install \
+    /tmp/akmods-rpms/kmods/*evdi*.rpm \
     ; fi && \
     sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/negativo17-fedora-multimedia.repo && \
     wget https://copr.fedorainfracloud.org/coprs/che/nerd-fonts/repo/fedora-"${FEDORA_MAJOR_VERSION}"/che-nerd-fonts-fedora-"${FEDORA_MAJOR_VERSION}".repo -O /etc/yum.repos.d/_copr_che-nerd-fonts-"${FEDORA_MAJOR_VERSION}".repo
@@ -114,6 +114,12 @@ RUN wget https://copr.fedorainfracloud.org/coprs/ublue-os/staging/repo/fedora-"$
     ostree container commit && \
     mkdir -p /var/tmp && \
     chmod -R 1777 /var/tmp
+
+##  Custom image commands
+
+# Enable services
+RUN systemctl enable sshd.service && \
+    systemctl enable bootstrap-system.service
 
 ## bluefin-dx developer edition image section
 FROM bluefin AS bluefin-dx
